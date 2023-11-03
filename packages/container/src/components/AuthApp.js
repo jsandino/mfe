@@ -1,4 +1,4 @@
-import { mount } from 'marketing/Marketing';
+import { mount } from 'auth/AuthApp';
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ const onNavigation = () => {
   console.log('Child triggered navigation event!');
 };
 
-export default () => {
+export default ({ onSignIn }) => {
   const ref = useRef(null);
   const history = useHistory();
 
@@ -16,10 +16,13 @@ export default () => {
       onNavigation: ({ pathname: newPathname }) => {
         const { pathname } = history.location;
         if (pathname != newPathname) {
-          console.log(`Container app: child changed location to ${newPathname}`);
+          console.log(
+            `Container app: child changed location to ${newPathname}`
+          );
           history.push(newPathname);
         }
       },
+      onSignIn
     });
 
     history.listen(onParentNavigate);
